@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+int arr[10000000]={0};
+
+int partition(int start,int end)
+{
+	int pivot,i,j,temp;
+	pivot=arr[start];	
+	i=start+1,j=end;
+	while(1)
+	{
+		while(arr[i]<=pivot && i<=end)
+			i++;
+		while(arr[j]>pivot)
+			j--;
+		if(i>=j)
+			break;	
+		temp=arr[i];
+		arr[i]=arr[j];
+		arr[j]=temp;
+	}
+	temp=arr[start];
+	arr[start]=arr[j];
+	arr[j]=temp;
+	return j;
+}
+
+void quickSort(int start,int end)
+{
+	int j;
+	if(start<end)
+	{
+		j=partition(start,end);
+		quickSort(start,j-1);
+		quickSort(j+1,end);
+	}
+	return;
+}
+
+int main(void)
+{
+	int n,i;
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+		scanf("%d",&arr[i]);
+	quickSort(0,n-1);
+	for(i=0;i<n;i++)
+		printf("%d\n",arr[i]);
+	return 0;	
+}
